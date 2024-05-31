@@ -36,7 +36,7 @@ echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft
 rm -f packages.microsoft.gpg
 sudo apt update
 sudo apt install code
-echo {\r\n\t"keyboard.dispatch": "keyCode"\r\n} > $HOME/.config/Code/User/setting.json
+echo "{\r\n\t"keyboard.dispatch": "keyCode"\r\n}" > $HOME/.config/Code/User/setting.json
 
 #install mozc
 sudo apt install -y ibus-mozc mozc-util-gui
