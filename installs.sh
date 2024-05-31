@@ -21,8 +21,8 @@ sudo apt install -y gufw
 sudo ufw enable
 
 #install chrome
-mkdir -p $HOME/Download/install_file
-wget -P $HOME/Download/install_file https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+mkdir -p $HOME/Downloads/install_file
+wget -P $HOME/Downloads/install_file https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt install -y $HOME/Download/install_file/google-chrome-stable_current_amd64.deb
 
 #install utilities
@@ -30,8 +30,8 @@ sudo apt install -y vim gnome-tweaks curl apt-transport-https
 sudo apt install -y git build-essential cmake python3-venv
 
 #install vscode
-wget -P $HOME/Download/install_file -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-sudo install -D -o root -g root -m 644 $HOME/Download/install_file/packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+wget -P $HOME/Downloads/install_file -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+sudo install -D -o root -g root -m 644 $HOME/Downloads/install_file/packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
 echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
 rm -f packages.microsoft.gpg
 sudo apt update
