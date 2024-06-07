@@ -4,4 +4,4 @@ echo -e "{\n\t"keyboard.dispatch": "keyCode"\n}" > $HOME/.config/Code/User/setti
 touch $HOME/.vimrc
 echo -e "set number\nset smartindent" >> $HOME/.vimrc
 
-apt -y install wireshark
+sudo apt -y install wireshark
