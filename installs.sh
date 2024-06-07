@@ -9,7 +9,7 @@ apt -y upgrade
 
 #remove firefox
 apt remove -y firefox* thunderbird
-snap remove -y firefox
+snap remove firefox
 apt autoremove -y
 
 #install firefox-esr
