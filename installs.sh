@@ -1,33 +1,41 @@
 #!/bin/sh
 
 #remove games
-sudo apt remove -y gnome-sudoku gnome-mines gnome-mahjongg aisleriot
+apt remove -y gnome-ku gnome-mines gnome-mahjongg aisleriot
 
 #update & uprade
-sudo apt -y update
-sudo apt -y upgrade
+apt -y update
+apt -y upgrade
 
 #remove firefox
-sudo apt remove -y firefox* thunderbird
-sudo snap remove firefox
-sudo apt autoremove -y
-
-#install firefox-esr
-sudo add-apt-repository -y ppa:mozillateam/ppa
-sudo apt install -y firefox-esr
+apt remove -y firefox* thunderbird
+snap remove firefox
 
 #install gufw
-sudo apt install -y gufw
-sudo ufw enable
+apt install -y gufw
+ufw enable
 
 #install chrome
 mkdir -p $HOME/Downloads/install_file
 wget -P $HOME/Downloads/install_file https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo apt install -y $HOME/Downloads/install_file/google-chrome-stable_current_amd64.deb
+apt install -y $HOME/Downloads/install_file/google-chrome-stable_current_amd64.deb
+rm -f $HOME/Downloads/install_file/google-chrome-stable_current_amd64.deb
 
 #install utilities
-sudo apt install -y vim gnome-tweaks curl apt-transport-https
-sudo apt install -y git build-essential cmake python3-venv
+apt install -y gnome-tweaks
+apt install -y curl apt-transport-https ca-certificates gnupg
+apt install -y git build-essential cmake vim
+
+#install docker
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+chmod a+r /etc/apt/keyrings/docker.asc
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  tee /etc/apt/sources.list.d/docker.list > /dev/null
+apt-get update
+apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 #install vscode
 curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > $HOME/Downloads/install_file/microsoft.gpg
@@ -38,15 +46,19 @@ sudo apt update
 sudo apt install code
 echo -e '{\n\t"keyboard.dispatch": "keyCode"\n}' > $HOME/.config/Code/User/settings.json
 
-#install mozc
-sudo apt install -y ibus-mozc mozc-util-gui
-
-#install ROS
-sudo add-apt-repository -y universe
-sudo apt -y update
-curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
-sudo apt -y update
-sudo apt install -y ros-humble-desktop
-sudo apt install -y ros-dev-tools
-echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+#install nvidia driver
+nvidia-smi
+if [ $? -gt 0 ]; then
+	read -p 'Remove all exist nvidia-driver and cuda-toolkit. (y/N): ' yn
+	case "$yn" in
+		[yY]*) 
+			apt remove --purge nvidia-* cuda-*
+			apt install -y ubuntu-drivers-common
+			driver=$(ubuntu-drivers devices | grep recommended | awk '{print $3}')
+			echo "Install ${driver}"
+			apt install -y --no-install-recommends ${driver}
+			echo 'please reboot and continue installing cuda-toolkit by running setup_after.sh';;
+		*)
+			echo 'abort installing nvidia-drivers';;
+	esac
+fi
