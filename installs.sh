@@ -56,7 +56,7 @@ if [ $? -gt 0 ]; then
 			apt install -y ubuntu-drivers-common
 			driver=$(ubuntu-drivers devices | grep recommended | awk '{print $3}')
 			apt install -y --no-install-recommends ${driver}
-			echo 'please reboot and continue installing cuda-toolkit by running setup_after.bash';;
+			echo 'please reboot and continue installation of cuda-toolkit by running setup_after.bash';;
 		*)
 			echo 'abort installing nvidia-drivers';;
 	esac
