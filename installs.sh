@@ -16,14 +16,14 @@ apt install -y gufw
 ufw enable
 
 #install chrome
-mkdir -p $HOME/Downloads/install_file
-wget -P $HOME/Downloads/install_file https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-apt install -y $HOME/Downloads/install_file/google-chrome-stable_current_amd64.deb
-rm -f $HOME/Downloads/install_file/google-chrome-stable_current_amd64.deb
+#mkdir -p $HOME/Downloads/install_file
+#wget -P $HOME/Downloads/install_file https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+#apt install -y $HOME/Downloads/install_file/google-chrome-stable_current_amd64.deb
+#rm -f $HOME/Downloads/install_file/google-chrome-stable_current_amd64.deb
 
 #install utilities
 apt install -y gnome-tweaks
-apt install -y curl apt-transport-https ca-certificates gnupg
+apt install -y curl apt-transport-https ca-certificates gnupg ssh
 apt install -y git build-essential cmake vim
 
 #install docker
@@ -44,7 +44,7 @@ echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/microsoft.gpg] htt
 rm -f $HOME/Downloads/install_file/microsoft.gpg
 sudo apt update
 sudo apt install code
-echo -e '{\n\t"keyboard.dispatch": "keyCode"\n}' > $HOME/.config/Code/User/settings.json
+#echo -e '{\n\t"keyboard.dispatch": "keyCode"\n}' > $HOME/.config/Code/User/settings.json
 
 #install nvidia driver
 nvidia-smi
@@ -55,9 +55,8 @@ if [ $? -gt 0 ]; then
 			apt remove --purge nvidia-* cuda-*
 			apt install -y ubuntu-drivers-common
 			driver=$(ubuntu-drivers devices | grep recommended | awk '{print $3}')
-			echo "Install ${driver}"
 			apt install -y --no-install-recommends ${driver}
-			echo 'please reboot and continue installing cuda-toolkit by running setup_after.sh';;
+			echo 'please reboot and continue installing cuda-toolkit by running setup_after.bash';;
 		*)
 			echo 'abort installing nvidia-drivers';;
 	esac
