@@ -49,7 +49,7 @@ sudo apt install code
 #install nvidia driver
 nvidia-smi
 if [ $? -gt 0 ]; then
-	read -p 'Remove all exist nvidia-driver and cuda-toolkit. (y/N): ' yn
+	read -p 'Remove all existing nvidia-driver and cuda-toolkit. (y/N): ' yn
 	case "$yn" in
 		[yY]*) 
 			apt remove --purge nvidia-* cuda-*
