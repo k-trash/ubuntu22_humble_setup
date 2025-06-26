@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #remove games
-apt remove -y gnome-ku gnome-mines gnome-mahjongg aisleriot
+apt remove -y gnome-sudoku gnome-mines gnome-mahjongg aisleriot
 
 #update & uprade
 apt -y update
