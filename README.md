@@ -1,12 +1,15 @@
 # Usage
 
 ```
-sudo sh instal.sh
-reboot
+sh instal.sh
 ```
 then
 ```
-sudo bash setup_after.bash
+reboot
+```
+after reboot
+```
+bash setup_after.bash
 ```
 
 # Nvidia Docker Installation
